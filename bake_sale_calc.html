@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bake Sale</title>
+
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 5em;
+      /* max-width: 10em; */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .display {
+      margin: 0.5em;
+      padding: 0.1em;
+      border: 3px solid black;
+      min-width: 50%;
+    }
+
+    .button-group {
+      display: flex;
+      flex-flow: row wrap;
+      max-width: 50%;
+      margin: 0 0.5em;
+    }
+
+    .button {
+      flex: 1;
+      outline: none;
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 9px #9eb7c0;
+      background-color: #add8e6;
+      cursor: pointer;
+      padding: 0.2em;
+      margin: 0.1em;
+      text-align: center;
+    }
+
+    .button:hover {background-color: #9ec7d5}
+
+    .button:active {
+      background-color: lightblue;
+      box-shadow: 0 5px #80959c;
+      transform: translateY(4px);
+    }
+
+    .counter {
+      font-size: 0.5em;
+      color: maroon;
+    }
+  </style>
+
+  <script>
+    var currentTotal = 0;
+    var addedNums = [];  // Keep track of what was added so that it can be undone
+    var counters = {
+      0.5: 0,
+      1: 0,
+      2: 0,
+      3: 0
+    };
+    
+    const add = (value) => {
+      currentTotal += value;
+      document.getElementById("total").innerHTML = currentTotal;
+      addedNums.push(value);
+      // Add to counter label
+      counters[value] = counters[value] + 1;
+      document.getElementById(`counter${value}`).innerHTML = counters[value];
+    }
+
+    const undo = () => {
+      if (addedNums.length > 0) {
+        const lastNum = addedNums.pop()
+        currentTotal -= lastNum;
+        document.getElementById("total").innerHTML = currentTotal;
+        // Subtract counter label
+        counters[lastNum] = counters[lastNum] - 1;
+        document.getElementById(`counter${lastNum}`).innerHTML = counters[lastNum];
+      }
+    }
+
+    const clear = () => {
+      // Clear stored values
+      currentTotal = 0;
+      addedNums = [];
+      counters = {
+        0.5: 0,
+        1: 0,
+        2: 0,
+        3: 0
+      };
+      // Clear display
+      document.getElementById("total").innerHTML = 0;
+      document.getElementById("counter0.5").innerHTML = 0;
+      document.getElementById("counter1").innerHTML = 0;
+      document.getElementById("counter2").innerHTML = 0;
+      document.getElementById("counter3").innerHTML = 0;
+    }
+
+    const onClickAdd = (value) => {
+      add(value);
+    }
+
+    const onClickUndo = () => {
+      undo();
+    }
+
+    const onClickClear = () => {
+      clear();
+    }
+  </script>
+</head>
+<body>
+  <div class="display" id="total">
+    <!-- Full width box -->
+    0
+  </div>
+  <div class="button-group">
+    <!-- Delete and clear button -->
+    <div style="width:100%; display: flex;">
+      <div class="button" onclick="onClickClear()">
+        Clear
+      </div>
+      <div class="button" onclick="onClickUndo()">
+        Undo
+      </div>
+    </div>
+    
+    <!-- Buttons for cents -->
+    <div class="button" onclick="onClickAdd(0.5)">
+      <div>50¢</div>
+      <div class="counter" id="counter0.5">0</div>
+    </div>
+    <div class="button" onclick="onClickAdd(1)">
+      <div>$1</div>
+      <div class="counter" id="counter1">0</div>
+    </div>
+    <div class="button" onclick="onClickAdd(2)">
+      <div>$2</div>
+      <div class="counter" id="counter2">0</div>
+    </div>
+    <div class="button" onclick="onClickAdd(3)">
+      <div>$3</div>
+      <div class="counter" id="counter3">0</div>
+    </div>
+  </div>
+</body>
+</html>
