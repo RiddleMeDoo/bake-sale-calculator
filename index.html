@@ -7,24 +7,40 @@
 
   <style>
     body {
+      justify-content: center;
+      display: flex;
+    }
+
+    .container {
       font-family: 'Courier New', Courier, monospace;
-      font-size: 5em;
+      font-size: 3rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+      width: 25rem;
+      padding: 0.5rem;
+    }
+
+    @media screen and (max-width: 480px) {
+      .container {
+        width: 100%;
+        font-size: 3rem;
+      }
     }
 
     .display {
-      margin: 0.5em;
+      margin: 0.3em;
       padding: 0.1em;
       border: 3px solid black;
-      min-width: 50%;
+      min-width: 200px;
     }
 
     .button-group {
-      display: flex;
-      flex-flow: row wrap;
-      max-width: 400px;
+      display: inline-flex;
+      flex: auto;
+      flex-flow: column wrap;
       margin: 0 0.5em;
     }
 
@@ -37,21 +53,30 @@
       background-color: #add8e6;
       cursor: pointer;
       padding: 0.2em;
-      margin: 0.1em;
+      margin: 0.2em;
       text-align: center;
       user-select: none;
     }
-
     .button:hover {background-color: #9ec7d5}
-
     .button:active {
       background-color: lightblue;
       box-shadow: 0 5px #80959c;
-      transform: translateY(4px);
+      transform: translateY(5px);
+    }
+
+    .functional-buttons {
+      width: 100%; display: flex; flex-flow: row wrap;
+    }
+    .functional-buttons > .button {
+      font-size: 2rem;
+    }
+    
+    .currency-buttons {
+      display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto;
     }
 
     .counter {
-      font-size: 0.5em;
+      font-size: 2rem;
       color: maroon;
     }
   </style>
@@ -118,37 +143,41 @@
   </script>
 </head>
 <body>
-  <div class="display" id="total">
-    <!-- Full width box -->
-    0
-  </div>
-  <div class="button-group">
-    <!-- Delete and clear button -->
-    <div style="width:100%; display: flex;">
-      <div class="button" onclick="onClickClear()">
-        Clear
+  <div class="container">
+    <div class="display" id="total">
+      <!-- Full width box -->
+      0
+    </div>
+    <div class="button-group">
+      <!-- Delete and clear button -->
+      <div class="functional-buttons">
+        <div class="button" onclick="onClickClear()">
+          Clear
+        </div>
+        <div class="button" onclick="onClickUndo()">
+          Undo
+        </div>
       </div>
-      <div class="button" onclick="onClickUndo()">
-        Undo
+      
+      <!-- Buttons for cents -->
+      <div class="currency-buttons">
+        <div class="button" onclick="onClickAdd(0.5)">
+          <div>50¢</div>
+          <div class="counter" id="counter0.5">0</div>
+        </div>
+        <div class="button" onclick="onClickAdd(1)">
+          <div>$1</div>
+          <div class="counter" id="counter1">0</div>
+        </div>
+        <div class="button" onclick="onClickAdd(2)">
+          <div>$2</div>
+          <div class="counter" id="counter2">0</div>
+        </div>
+        <div class="button" onclick="onClickAdd(3)">
+          <div>$3</div>
+          <div class="counter" id="counter3">0</div>
+        </div>
       </div>
-    </div>
-    
-    <!-- Buttons for cents -->
-    <div class="button" onclick="onClickAdd(0.5)">
-      <div>50¢</div>
-      <div class="counter" id="counter0.5">0</div>
-    </div>
-    <div class="button" onclick="onClickAdd(1)">
-      <div>$1</div>
-      <div class="counter" id="counter1">0</div>
-    </div>
-    <div class="button" onclick="onClickAdd(2)">
-      <div>$2</div>
-      <div class="counter" id="counter2">0</div>
-    </div>
-    <div class="button" onclick="onClickAdd(3)">
-      <div>$3</div>
-      <div class="counter" id="counter3">0</div>
     </div>
   </div>
 </body>
